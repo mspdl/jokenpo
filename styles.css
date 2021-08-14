@@ -22,6 +22,7 @@
 
 #jogador,
 #computador {
+    border: 2px solid transparent;
     position: relative;
     flex-grow: 1;
     border-radius: 5px;
@@ -115,3 +116,71 @@
     padding: 20px;
     color: #fff;
 }
+
+.esperando {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink { 50% {border-color: #333;}}
+
+.jogando {
+    overflow: hidden;
+    position: relative;
+  }
+  .jogando::before, .jogando::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+  }
+  .jogando::before {
+    top: 0;
+    left: 0;
+    border-top-color: black;
+    border-right-color: black;
+    animation: border 2s infinite;
+  }
+  .jogando::after {
+    bottom: 0;
+    right: 0;
+    animation: border 2s 1s infinite, borderColor 2s 1s infinite;
+  }
+  
+  @keyframes border {
+    0% {
+      width: 0;
+      height: 0;
+    }
+    25% {
+      width: 100%;
+      height: 0;
+    }
+    50% {
+      width: 100%;
+      height: 100%;
+    }
+    100% {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  @keyframes borderColor {
+    0% {
+      border-bottom-color: black;
+      border-left-color: black;
+    }
+    50% {
+      border-bottom-color: black;
+      border-left-color: black;
+    }
+    51% {
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+    100% {
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+  }

@@ -13,6 +13,7 @@ definirNomeJogador(nomeJogador);
 atualizarMensagem(`Bem vindo ${nomeJogador}, está preparado? Escolha uma opção acima...`);
 document.getElementById('jogador-pontos').innerHTML = pontosJogador;
 document.getElementById('computador-pontos').innerHTML = pontosJogador;
+document.getElementById('jogador').classList.add('esperando');
 
 function atualizarMensagem(mensagem) {
     document.getElementById('mensagem').innerHTML = mensagem;
@@ -34,6 +35,10 @@ function somarPontosComputador() {
 
 function mostrarEscolha(quem, escolha) {
     document.getElementById(quem + '-escolha-' + escolha).classList.add('selecionado');
+    document.getElementById('jogador').classList.remove('esperando');
+
+    document.getElementById('jogador').classList.add('jogando');
+    document.getElementById('computador').classList.add('jogando');
 }
 
 function ocultarEscolha() {
@@ -43,6 +48,10 @@ function ocultarEscolha() {
     document.getElementById('computador-escolha-1').classList.remove('selecionado');
     document.getElementById('computador-escolha-2').classList.remove('selecionado');
     document.getElementById('computador-escolha-3').classList.remove('selecionado');
+
+    document.getElementById('jogador').classList.add('esperando');
+    document.getElementById('jogador').classList.remove('jogando');
+    document.getElementById('computador').classList.remove('jogando');
 }
 
 document.getElementById('jogador-escolha-1').onclick = function () { jogar(1) };
@@ -81,7 +90,7 @@ function jogar(escolha) {
         somarPontosComputador();
     }
 
-    timeoutID = setTimeout(resetarJogada, 3000);
+    timeoutID = setTimeout(resetarJogada, 2000);
     
 }
 

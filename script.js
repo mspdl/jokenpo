@@ -3,6 +3,7 @@ var escolhaJogador;
 var escolhaComputador;
 var pontosJogador = 0;
 var pontosComputador = 0;
+let timeoutID;
 
 do {
     nomeJogador = prompt('Qual é o seu nome?');
@@ -31,22 +32,38 @@ function somarPontosComputador() {
     document.getElementById('computador-pontos').innerHTML = pontosComputador;
 }
 
-function mostrarEscolha(quem, escolha){
+function mostrarEscolha(quem, escolha) {
     document.getElementById(quem + '-escolha-' + escolha).classList.add('selecionado');
 }
 
-function ocultarEscolha(quem, escolha){
-    document.getElementById(quem + '-escolha-' + escolha).classList.remove('selecionado');
+function ocultarEscolha() {
+    document.getElementById('jogador-escolha-1').classList.remove('selecionado');
+    document.getElementById('jogador-escolha-2').classList.remove('selecionado');
+    document.getElementById('jogador-escolha-3').classList.remove('selecionado');
+    document.getElementById('computador-escolha-1').classList.remove('selecionado');
+    document.getElementById('computador-escolha-2').classList.remove('selecionado');
+    document.getElementById('computador-escolha-3').classList.remove('selecionado');
 }
 
 document.getElementById('jogador-escolha-1').onclick = function () { jogar(1) };
 document.getElementById('jogador-escolha-2').onclick = function () { jogar(2) };
 document.getElementById('jogador-escolha-3').onclick = function () { jogar(3) };
 
+function resetarJogada(){
+    ocultarEscolha();
+    atualizarMensagem(`${nomeJogador} escolha uma opção...`);
+}
+
+
 function jogar(escolha) {
     // 1 = pedra
     // 2 = papel
     // 3 = tesoura
+    if(timeoutID){
+        resetarJogada();
+        clearTimeout(timeoutID);
+    }
+
     escolhaJogador = escolha;
     mostrarEscolha('jogador', escolhaJogador);
 
@@ -64,11 +81,8 @@ function jogar(escolha) {
         somarPontosComputador();
     }
 
-    setTimeout(function(){ 
-        ocultarEscolha('jogador', escolhaJogador);
-        ocultarEscolha('computador', escolhaComputador);
-        atualizarMensagem(`${nomeJogador} escolha uma opção...`)
-    }, 2000);
+    timeoutID = setTimeout(resetarJogada, 3000);
+    
 }
 
 function sortear(min, max) {
